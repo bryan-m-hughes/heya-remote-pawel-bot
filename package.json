@@ -1,0 +1,30 @@
+{
+  "name": "heya-remote-pawel-bot",
+  "version": "1.0.0",
+  "description": "Remote Pawel Bot driver for Heya",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bryan-m-hughes/heya-remote-pawel-bot.git"
+  },
+  "keywords": [
+    "sumobots",
+    "johnny-five",
+    "nodebots",
+    "robotics"
+  ],
+  "author": "Bryan Hughes <bryan@theoreticalideations.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bryan-m-hughes/heya-remote-pawel-bot/issues"
+  },
+  "homepage": "https://github.com/bryan-m-hughes/heya-remote-pawel-bot",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "johnny-five": "^0.8.76"
+  }
+}
