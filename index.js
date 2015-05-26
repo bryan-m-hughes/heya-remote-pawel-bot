@@ -78,6 +78,14 @@ function move(x, y) {
     leftSpeed = 1 + normalizedAngle;
     rightSpeed = -1;
   }
-  leftServo.to(leftSpeed);
-  rightServo.to(rightSpeed);
+  if (leftSpeed < 1) {
+    leftServo.cw(-leftSpeed);
+  } else {
+    leftServo.ccw(leftSpeed);
+  }
+  if (rightSpeed < 1) {
+    rightServo.ccw(-rightSpeed);
+  } else {
+    rightServo.cw(rightSpeed);
+  }
 }
