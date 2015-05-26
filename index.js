@@ -26,15 +26,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var five = require('johnny-five');
 
-var LEFT_FORWARD = 180;
-var LEFT_FORWARD_SLOW = 92.5;
-var RIGHT_FORWARD = 0;
-var RIGHT_FORWARD_SLOW = 87.5;
-var LEFT_REVERSE = 0;
-var LEFT_REVERSE_SLOW = 87;
-var RIGHT_REVERSE = 180;
-var RIGHT_REVERSE_SLOW = 93;
-
 var leftServo;
 var rightServo;
 
@@ -58,7 +49,7 @@ module.exports = function(options) {
       res.send('ready');
     });
     app.post('/update', function(req, res) {
-      move(req.body.direction);
+      move(req.body.x, req.body.y);
       res.send('ok');
     });
     var server = app.listen(options.port || 8000, function() {
@@ -67,44 +58,26 @@ module.exports = function(options) {
   });
 };
 
-function move(direction) {
-  console.log('Moving ' + direction);
-  switch(direction) {
-    case 'none':
-      leftServo.stop();
-      rightServo.stop();
-      break;
-    case 'up':
-      leftServo.to(LEFT_FORWARD);
-      rightServo.to(RIGHT_FORWARD);
-      break;
-    case 'upright':
-      leftServo.to(LEFT_FORWARD);
-      rightServo.to(RIGHT_FORWARD_SLOW);
-      break;
-    case 'right':
-      leftServo.to(LEFT_FORWARD);
-      rightServo.to(RIGHT_REVERSE);
-      break;
-    case 'downright':
-      leftServo.to(LEFT_REVERSE);
-      rightServo.to(RIGHT_REVERSE_SLOW);
-      break;
-    case 'down':
-      leftServo.to(LEFT_REVERSE);
-      rightServo.to(RIGHT_REVERSE);
-      break;
-    case 'downleft':
-      leftServo.to(LEFT_REVERSE_SLOW);
-      rightServo.to(RIGHT_REVERSE);
-      break;
-    case 'left':
-      leftServo.to(LEFT_REVERSE);
-      rightServo.to(RIGHT_FORWARD);
-      break;
-    case 'upleft':
-      leftServo.to(LEFT_FORWARD_SLOW);
-      rightServo.to(RIGHT_FORWARD);
-      break;
+function move(x, y) {
+  var leftSpeed;
+  var rightSpeed;
+  var normalizedAngle = 2 * Math.atan(y / x) / (Math.PI / 2);
+  if (Math.abs(x) < 0.1 && Math.abs(y) < 0.1) {
+    leftSpeed = 0;
+    rightSpeed = 0;
+  } else if (x >= 0 && y >= 0) {
+    leftSpeed = 1;
+    rightSpeed = 1 - normalizedAngle;
+  } else if (x < 0 && y >= 0) {
+    leftSpeed = -1 - normalizedAngle;
+    rightSpeed = 1;
+  } else if (x < 0 && y < 0) {
+    leftSpeed = -1;
+    rightSpeed = 1 - normalizedAngle;
+  } else if (x >= 0 && y < 0) {
+    leftSpeed = 1 + normalizedAngle;
+    rightSpeed = -1;
   }
+  leftServo.to(leftSpeed);
+  rightServo.to(rightSpeed);
 }
