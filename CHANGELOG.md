@@ -1,3 +1,7 @@
+## 1.1.3 (2015-5-28)
+
+- Fixed more angle converstion bugs
+
 ## 1.1.2 (2015-5-28)
 
 - Fixed directions being swapped

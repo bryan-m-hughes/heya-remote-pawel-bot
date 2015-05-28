@@ -67,16 +67,16 @@ function move(x, y) {
     rightSpeed = 0;
   } else if (x >= 0 && y >= 0) {
     rightSpeed = 1;
-    leftSpeed = 1 - normalizedAngle;
+    leftSpeed = -1 + normalizedAngle;
   } else if (x < 0 && y >= 0) {
     rightSpeed = -1 - normalizedAngle;
     leftSpeed = 1;
   } else if (x < 0 && y < 0) {
-    rightSpeed = -1;
-    leftSpeed = 1 - normalizedAngle;
-  } else if (x >= 0 && y < 0) {
-    rightSpeed = 1 + normalizedAngle;
     leftSpeed = -1;
+    rightSpeed = 1 - normalizedAngle;
+  } else if (x >= 0 && y < 0) {
+    leftSpeed = 1 + normalizedAngle;
+    rightSpeed = -1;
   }
   if (leftSpeed < 1) {
     leftServo.cw(-leftSpeed);
