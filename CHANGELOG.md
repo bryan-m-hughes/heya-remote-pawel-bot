@@ -1,3 +1,7 @@
+## 1.1.2 (2015-5-28)
+
+- Fixed directions being swapped
+
 ## 1.1.1 (2015-5-26)
 
 - Bug fix with driving servos
